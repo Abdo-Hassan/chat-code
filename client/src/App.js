@@ -3,13 +3,17 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import './App.css';
 import Chat from './components/Chat';
 import Join from './components/Join';
+import NotFound from './components/NotFound';
 
 function App() {
   return (
     <Router>
       <div className='App'>
-        <Route exact path='/' component={Join} />
-        <Route exact path='/chat' component={Chat} />
+        <Switch>
+          <Route exact path='/' component={Join} />
+          <Route exact path='/chat' component={Chat} />
+          <Route component={NotFound} />
+        </Switch>
       </div>
     </Router>
   );

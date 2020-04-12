@@ -17,7 +17,7 @@ const Chat = () => {
           <h3>
             <i className='fas fa-comments'></i> Room Name:
           </h3>
-          <h2 id='room-name'></h2>
+          {/* <h2 id='room-name'>{room}</h2> */}
           <h3>
             <i className='fas fa-users'></i> Users
           </h3>
