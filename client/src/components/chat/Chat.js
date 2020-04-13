@@ -1,12 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import queryString from 'query-string';
 import { makeStyles } from '@material-ui/core/styles';
-import { Button } from '@material-ui/core';
+import Button from '@material-ui/core/Button';
 import io from 'socket.io-client';
 import { Link } from 'react-router-dom';
 import Code from '@material-ui/icons/Code';
-import Group from '@material-ui/icons/Group';
-import Online from '@material-ui/icons/FiberManualRecord';
+import UsersOnline from './UsersOnline';
+import Messages from './Messages';
+import Send from './Send';
 
 const useStyles = makeStyles((theme) => ({
   icon: {
@@ -17,23 +18,6 @@ const useStyles = makeStyles((theme) => ({
     fontSize: 28,
     position: 'relative',
     top: 4,
-  },
-  online: {
-    position: 'relative',
-    top: 7,
-    right: 2,
-    color: '#06f706',
-  },
-  send: {
-    color: '#fff',
-    backgroundColor: '#0d824c',
-    borderTopRightRadius: 5,
-    borderBottomRightRadius: 5,
-    borderTopLeftRadius: 0,
-    borderBottomLeftRadius: 0,
-    '&:hover': {
-      backgroundColor: '#0e9f5c',
-    },
   },
 }));
 
@@ -46,6 +30,8 @@ const Chat = ({ location }) => {
   const [messages, setMessages] = useState([]);
   const [users, setUsers] = useState([]);
   const [userMessage, setUserMessage] = useState('');
+
+  // const inputRef = useRef();
 
   useEffect(() => {
     let socket;
@@ -72,9 +58,9 @@ const Chat = ({ location }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     socket.emit('chatMessage', userMessage);
+    // let input = inputRef.current.value;
+    // input = '';
   };
-
-  console.log(socket);
 
   return (
     <div className='chat-container'>
@@ -89,58 +75,14 @@ const Chat = ({ location }) => {
         </Link>
       </header>
       <main className='chat-main'>
-        <div className='chat-sidebar'>
-          <h3>
-            <i className='fas fa-comments'></i> Room Name:
-          </h3>
-          <h2 id='room-name'>{room}</h2>
-          <h3>
-            <i className='fas fa-users'></i>
-            <Group
-              className={classes.icon}
-              style={{ top: 8, right: 8, padding: 3 }}
-            />
-            Users Online
-          </h3>
-          <ul id='users'>
-            {users.map((user) => (
-              <li key={user.id}>
-                <Online className={classes.online} />
-                {user.username}
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        <div className='chat-messages'>
-          {messages.map((message) => (
-            <div className='message' key={Math.random() * 10000}>
-              <p className='meta'>
-                {message.username} {''}
-                <span>{message.time}</span>
-              </p>
-              <p className='text'>{message.text}</p>
-            </div>
-          ))}
-        </div>
+        <UsersOnline users={users} room={room} />
+        <Messages messages={messages} />
       </main>
-      <div className='chat-form-container'>
-        <form id='chat-form' onSubmit={handleSubmit}>
-          <input
-            id='msg'
-            type='text'
-            placeholder='Type a message ...'
-            required
-            autoComplete='off'
-            value={userMessage}
-            onChange={(e) => setUserMessage(e.target.value)}
-            autoFocus
-          />
-          <Button variant='contained' type='submit' className={classes.send}>
-            Send
-          </Button>
-        </form>
-      </div>
+      <Send
+        handleSubmit={handleSubmit}
+        userMessage={userMessage}
+        setUserMessage={setUserMessage}
+      />
     </div>
   );
 };
