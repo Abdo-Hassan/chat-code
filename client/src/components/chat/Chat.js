@@ -31,8 +31,6 @@ const Chat = ({ location }) => {
   const [users, setUsers] = useState([]);
   const [userMessage, setUserMessage] = useState('');
 
-  // const inputRef = useRef();
-
   useEffect(() => {
     let socket;
 
@@ -45,7 +43,8 @@ const Chat = ({ location }) => {
     socket.emit('joinRoom', { username, room });
 
     socket.on('message', (message) => {
-      setMessages([...messages, message]);
+      setMessages([message]);
+      console.log(messages);
     });
 
     socket.on('roomusers', (users) => {
@@ -58,8 +57,7 @@ const Chat = ({ location }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     socket.emit('chatMessage', userMessage);
-    // let input = inputRef.current.value;
-    // input = '';
+    setUserMessage('');
   };
 
   return (

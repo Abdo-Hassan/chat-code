@@ -25,7 +25,6 @@ const Send = ({ handleSubmit, userMessage, setUserMessage }) => {
         <input
           id='msg'
           type='text'
-          // ref={inputRef}
           placeholder='Type a message ...'
           required
           autoComplete='off'
