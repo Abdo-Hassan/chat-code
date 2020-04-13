@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import BG from '../assets/bg.png';
+import BG from '../../assets/bg.png';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -39,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: '#000',
   },
   form: {
-    width: '100%', // Fix IE 11 issue.
+    width: '100%',
     marginTop: theme.spacing(1),
   },
   submit: {
@@ -58,12 +58,13 @@ const Join = ({ history }) => {
 
   const handleChange = (e) => {
     setRoom(e.target.value);
-    console.log(e.target.value);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    history.push(`/chat?username=${username}&room=${room}`);
+    if (username && room) {
+      history.push(`/chat?username=${username}&room=${room}`);
+    }
   };
 
   return (
@@ -100,10 +101,11 @@ const Join = ({ history }) => {
                 value={room}
                 name='room'
                 onChange={handleChange}
+                required
               >
                 <MenuItem value='Javascript'>Javascript</MenuItem>
                 <MenuItem value='Python'>Python</MenuItem>
-                <MenuItem value='C#'>C#</MenuItem>
+                <MenuItem value='React'>React</MenuItem>
                 <MenuItem value='Java'>Java</MenuItem>
               </Select>
             </FormControl>
