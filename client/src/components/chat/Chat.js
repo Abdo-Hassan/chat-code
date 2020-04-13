@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
     border: '1px solid #fff',
     borderRadius: '50%',
     background: '#fff',
-    color: '#7e78d2',
+    color: '#3c4c61',
     fontSize: 28,
     position: 'relative',
     top: 4,
@@ -24,24 +24,37 @@ const useStyles = makeStyles((theme) => ({
     right: 2,
     color: '#06f706',
   },
+  send: {
+    color: '#fff',
+    backgroundColor: '#0d824c',
+    borderTopRightRadius: 5,
+    borderBottomRightRadius: 5,
+    borderTopLeftRadius: 0,
+    borderBottomLeftRadius: 0,
+    '&:hover': {
+      backgroundColor: '#0e9f5c',
+    },
+  },
 }));
 
 const Chat = ({ location }) => {
   const classes = useStyles();
 
   const ENDPOINT = 'localhost:5000';
+  const [socket, setSocket] = useState();
   const [room, setRoom] = useState('');
   const [messages, setMessages] = useState([]);
   const [users, setUsers] = useState([]);
   const [userMessage, setUserMessage] = useState('');
 
-  let socket;
-
   useEffect(() => {
+    let socket;
+
     const { username, room } = queryString.parse(location.search);
     setRoom(room);
 
     socket = io(ENDPOINT);
+    setSocket(socket);
 
     socket.emit('joinRoom', { username, room });
 
@@ -52,12 +65,16 @@ const Chat = ({ location }) => {
     socket.on('roomusers', (users) => {
       setUsers(users.users);
     });
+
+    console.log(socket);
   }, [ENDPOINT, location.search]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    socket.emit('chatMessage', 'emit');
+    socket.emit('chatMessage', userMessage);
   };
+
+  console.log(socket);
 
   return (
     <div className='chat-container'>
@@ -117,11 +134,9 @@ const Chat = ({ location }) => {
             autoComplete='off'
             value={userMessage}
             onChange={(e) => setUserMessage(e.target.value)}
+            autoFocus
           />
-          {/* <button className='btn' type='submit'>
-            <i className='fas fa-paper-plane'></i> Send
-          </button> */}
-          <Button variant='contained' type='submit' color='primary'>
+          <Button variant='contained' type='submit' className={classes.send}>
             Send
           </Button>
         </form>

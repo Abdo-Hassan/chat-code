@@ -36,17 +36,26 @@ const useStyles = makeStyles((theme) => ({
   },
   avatar: {
     margin: theme.spacing(1),
-    backgroundColor: '#000',
+    backgroundColor: '#3c4d61',
   },
   form: {
     width: '100%',
     marginTop: theme.spacing(1),
   },
   submit: {
-    margin: theme.spacing(3, 0, 2),
+    backgroundColor: '#3c4d61',
+    color: '#fff',
+    padding: '15px 0px',
+    width: '37%',
+    margin: '20px auto',
+    display: 'block',
+    borderRadius: 40,
+    '&:hover': {
+      backgroundColor: '#3c4d61d4',
+    },
   },
   formControl: {
-    margin: theme.spacing(1),
+    margin: 'theme.spacing(1) 0',
     minWidth: '100%',
   },
 }));
@@ -91,13 +100,13 @@ const Join = ({ history }) => {
               autoFocus
               onChange={(e) => setUsername(e.target.value)}
             />
-            <FormControl className={classes.formControl}>
+            <FormControl variant='filled' className={classes.formControl}>
               <InputLabel id='demo-simple-select-label'>
                 Choose a room
               </InputLabel>
               <Select
-                labelId='demo-simple-select-label'
-                id='demo-simple-select'
+                labelId='demo-simple-select-filled-label'
+                id='demo-simple-select-filled'
                 value={room}
                 name='room'
                 onChange={handleChange}
@@ -113,7 +122,6 @@ const Join = ({ history }) => {
               type='submit'
               fullWidth
               variant='contained'
-              color='primary'
               className={classes.submit}
             >
               Join
