@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import queryString from 'query-string';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
@@ -6,8 +6,8 @@ import io from 'socket.io-client';
 import { Link } from 'react-router-dom';
 import Code from '@material-ui/icons/Code';
 import UsersOnline from './UsersOnline';
-import Messages from './Messages';
 import Send from './Send';
+import Messages from './Message';
 
 const useStyles = makeStyles((theme) => ({
   icon: {
@@ -27,31 +27,34 @@ const Chat = ({ location }) => {
   const ENDPOINT = 'localhost:5000';
   const [socket, setSocket] = useState();
   const [room, setRoom] = useState('');
+  const [name, setName] = useState('');
   const [messages, setMessages] = useState([]);
   const [users, setUsers] = useState([]);
   const [userMessage, setUserMessage] = useState('');
 
   useEffect(() => {
+    // !init socket
     let socket;
-
-    const { username, room } = queryString.parse(location.search);
-    setRoom(room);
-
     socket = io(ENDPOINT);
     setSocket(socket);
 
+    // !get user name & room from URL
+    const { username, room } = queryString.parse(location.search);
+    setRoom(room);
+    setName(username);
+
+    // !join room
     socket.emit('joinRoom', { username, room });
 
-    socket.on('message', (message) => {
-      setMessages([message]);
-      console.log(messages);
-    });
-
+    // !get all online users
     socket.on('roomusers', (users) => {
       setUsers(users.users);
     });
 
-    console.log(socket);
+    // !get all messages
+    socket.on('message', (message) => {
+      setMessages([...messages, message]);
+    });
   }, [ENDPOINT, location.search]);
 
   const handleSubmit = (e) => {
@@ -74,7 +77,9 @@ const Chat = ({ location }) => {
       </header>
       <main className='chat-main'>
         <UsersOnline users={users} room={room} />
-        <Messages messages={messages} />
+        {messages.map((message) => (
+          <Messages message={message} name={name} />
+        ))}
       </main>
       <Send
         handleSubmit={handleSubmit}
