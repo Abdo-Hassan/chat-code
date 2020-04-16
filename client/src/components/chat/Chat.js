@@ -28,9 +28,10 @@ const Chat = ({ location }) => {
   const [socket, setSocket] = useState();
   const [room, setRoom] = useState('');
   const [name, setName] = useState('');
-  const [messages, setMessages] = useState([]);
   const [users, setUsers] = useState([]);
+  const [messages, setMessages] = useState([]);
   const [userMessage, setUserMessage] = useState('');
+  const [typing, setTyping] = useState([]);
 
   useEffect(() => {
     // !init socket
@@ -55,12 +56,23 @@ const Chat = ({ location }) => {
     socket.on('message', (message) => {
       setMessages([...messages, message]);
     });
+
+    // !user is typing
+    socket.on('messageTyping', (userTypingMessage) => {
+      setTyping([...typing, userTypingMessage]);
+    });
   }, [ENDPOINT, location.search]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     socket.emit('chatMessage', userMessage);
     setUserMessage('');
+    setTyping('');
+  };
+
+  const handleChage = (e) => {
+    setUserMessage(e.target.value);
+    socket.emit('typing', name, room);
   };
 
   return (
@@ -78,11 +90,12 @@ const Chat = ({ location }) => {
       <main className='chat-main'>
         <UsersOnline users={users} room={room} />
         {messages.map((message) => (
-          <Messages message={message} name={name} />
+          <Messages message={message} name={name} typing={typing} />
         ))}
       </main>
       <Send
         handleSubmit={handleSubmit}
+        handleChage={handleChage}
         userMessage={userMessage}
         setUserMessage={setUserMessage}
       />

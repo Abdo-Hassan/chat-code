@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Send = ({ handleSubmit, userMessage, setUserMessage }) => {
+const Send = ({ handleChage, handleSubmit, userMessage, setUserMessage }) => {
   const classes = useStyles();
 
   return (
@@ -29,7 +29,7 @@ const Send = ({ handleSubmit, userMessage, setUserMessage }) => {
           required
           autoComplete='off'
           value={userMessage}
-          onChange={(e) => setUserMessage(e.target.value)}
+          onChange={handleChage}
           autoFocus
         />
         <Button variant='contained' type='submit' className={classes.send}>

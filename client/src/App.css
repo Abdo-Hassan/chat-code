@@ -119,14 +119,14 @@ a {
 .chat-main {
   display: grid;
   grid-template-columns: 1fr 3fr;
-  height: 320px;
+  height: 350px;
 }
 
 .chat-sidebar {
   background: var(--secondary-color);
   color: #fff;
   padding: 20px 20px 60px;
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 
 .chat-sidebar h2 {
@@ -148,7 +148,7 @@ a {
 .chat-messages {
   padding: 30px;
   max-height: 500px;
-  overflow-y: scroll;
+  overflow-y: auto;
   display: flex;
   align-items: baseline;
 }
