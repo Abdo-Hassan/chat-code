@@ -91,7 +91,7 @@ const Chat = ({ location }) => {
         </Link>
       </header>
       <main className='chat-main'>
-        <UsersOnline users={users} room={room} />
+        <UsersOnline users={users} room={room} name={name} />
         <div
           className='chat-messages'
           ref={chatMessages}

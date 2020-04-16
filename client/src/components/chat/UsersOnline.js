@@ -19,9 +19,12 @@ const useStyles = makeStyles((theme) => ({
     right: 2,
     color: '#06f706',
   },
+  you: {
+    marginLeft: 5,
+  },
 }));
 
-const UsersOnline = ({ users, room }) => {
+const UsersOnline = ({ users, room, name }) => {
   const classes = useStyles();
 
   return (
@@ -42,7 +45,10 @@ const UsersOnline = ({ users, room }) => {
         {users.map((user) => (
           <li key={user.id}>
             <Online className={classes.online} />
-            {user.username}
+            <span>{user.username}</span>
+            {user.username === name && (
+              <span className={classes.you}>( You )</span>
+            )}
           </li>
         ))}
       </ul>
