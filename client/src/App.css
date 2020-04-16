@@ -119,7 +119,7 @@ a {
 .chat-main {
   display: grid;
   grid-template-columns: 1fr 3fr;
-  height: 350px;
+  height: 380px;
 }
 
 .chat-sidebar {
@@ -188,4 +188,9 @@ a {
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 0;
   outline: none;
+}
+
+.chat-messages .typing {
+  color: #797c80;
+  font-size: 15px;
 }

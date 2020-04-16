@@ -92,7 +92,11 @@ const Chat = ({ location }) => {
       </header>
       <main className='chat-main'>
         <UsersOnline users={users} room={room} />
-        <div className='chat-messages' ref={chatMessages}>
+        <div
+          className='chat-messages'
+          ref={chatMessages}
+          style={{ position: 'relative' }}
+        >
           {messages.map((message) => (
             <Message message={message} name={name} typing={typing} />
           ))}
