@@ -149,25 +149,23 @@ a {
   padding: 30px;
   max-height: 500px;
   overflow-y: auto;
-  display: flex;
-  align-items: baseline;
 }
 
 .chat-messages .message {
-  padding: 14px;
+  padding: 10px 16px;
   margin-bottom: 15px;
   background-color: #e7e7e7;
   border-radius: 5px;
   width: 50%;
+  word-break: break-word;
 }
 
-.chat-messages .meta {
+.chat-messages .message .meta {
   font-size: 15px;
   font-weight: bold;
   color: var(--secondary-color);
   opacity: 0.7;
   margin-bottom: 7px;
-  margin-left: 10px;
 }
 
 .chat-form-container {

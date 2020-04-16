@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import queryString from 'query-string';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 import Code from '@material-ui/icons/Code';
 import UsersOnline from './UsersOnline';
 import Send from './Send';
-import Messages from './Message';
+import Message from './Message';
 
 const useStyles = makeStyles((theme) => ({
   icon: {
@@ -33,6 +33,8 @@ const Chat = ({ location }) => {
   const [userMessage, setUserMessage] = useState('');
   const [typing, setTyping] = useState([]);
 
+  let chatMessages = useRef();
+
   useEffect(() => {
     // !init socket
     let socket;
@@ -54,12 +56,13 @@ const Chat = ({ location }) => {
 
     // !get all messages
     socket.on('message', (message) => {
-      setMessages([...messages, message]);
+      setMessages((messages) => [...messages, message]);
+      chatMessages.current.scrollTop = chatMessages.current.scrollHeight;
     });
 
     // !user is typing
     socket.on('messageTyping', (userTypingMessage) => {
-      setTyping([...typing, userTypingMessage]);
+      setTyping((typing) => [...typing, userTypingMessage]);
     });
   }, [ENDPOINT, location.search]);
 
@@ -89,9 +92,11 @@ const Chat = ({ location }) => {
       </header>
       <main className='chat-main'>
         <UsersOnline users={users} room={room} />
-        {messages.map((message) => (
-          <Messages message={message} name={name} typing={typing} />
-        ))}
+        <div className='chat-messages' ref={chatMessages}>
+          {messages.map((message) => (
+            <Message message={message} name={name} typing={typing} />
+          ))}
+        </div>
       </main>
       <Send
         handleSubmit={handleSubmit}
