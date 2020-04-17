@@ -31,6 +31,7 @@ const Chat = ({ location }) => {
   const [users, setUsers] = useState([]);
   const [messages, setMessages] = useState([]);
   const [userMessage, setUserMessage] = useState('');
+  const [userImage, setUserImage] = useState([]);
   const [typing, setTyping] = useState([]);
 
   let chatMessages = useRef();
@@ -57,7 +58,7 @@ const Chat = ({ location }) => {
     // !get all messages
     socket.on('message', (message) => {
       setMessages((messages) => [...messages, message]);
-      chatMessages.current.scrollTop = chatMessages.current.scrollHeight;
+      // chatMessages.current.scrollTop = chatMessages.current.scrollHeight;
     });
 
     // !user is typing
@@ -77,6 +78,12 @@ const Chat = ({ location }) => {
     setUserMessage(e.target.value);
     socket.emit('typing', name, room);
   };
+
+  const getImageFromSend = (image) => {
+    setUserImage(image);
+  };
+
+  console.log(userImage);
 
   return (
     <div className='chat-container'>
@@ -103,6 +110,7 @@ const Chat = ({ location }) => {
         </div>
       </main>
       <Send
+        getImageFromSend={getImageFromSend}
         handleSubmit={handleSubmit}
         handleChage={handleChage}
         userMessage={userMessage}
