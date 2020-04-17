@@ -49,7 +49,10 @@ const Send = ({ getImageFromSend, handleChage, handleSubmit, userMessage }) => {
           required
           InputProps={{
             endAdornment: (
-              <InputAdornment position='end' style={{ marginRight: 7 }}>
+              <InputAdornment
+                position='end'
+                style={{ display: 'flex', marginRight: 7 }}
+              >
                 <UploadImage image={image} getImage={getImage} />
               </InputAdornment>
             ),

@@ -58,7 +58,7 @@ const Chat = ({ location }) => {
     // !get all messages
     socket.on('message', (message) => {
       setMessages((messages) => [...messages, message]);
-      // chatMessages.current.scrollTop = chatMessages.current.scrollHeight;
+      chatMessages.current.scrollTop = chatMessages.current.scrollHeight;
     });
 
     // !user is typing
@@ -67,6 +67,7 @@ const Chat = ({ location }) => {
     });
   }, [ENDPOINT, location.search]);
 
+  // !submit the form
   const handleSubmit = (e) => {
     e.preventDefault();
     socket.emit('chatMessage', userMessage);
@@ -74,11 +75,13 @@ const Chat = ({ location }) => {
     setTyping('');
   };
 
+  // !handle messages
   const handleChage = (e) => {
     setUserMessage(e.target.value);
     socket.emit('typing', name, room);
   };
 
+  // !get user image
   const getImageFromSend = (image) => {
     setUserImage(image);
   };
