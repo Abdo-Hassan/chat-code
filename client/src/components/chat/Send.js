@@ -23,6 +23,9 @@ const useStyles = makeStyles((theme) => ({
     borderTopRightRadius: 0,
     borderBottomLeftRadius: 5,
     borderBottomRightRadius: 0,
+    '&:before': {
+      borderBottom: '10px solid red',
+    },
   },
 }));
 
@@ -47,6 +50,7 @@ const Send = ({ getImageFromSend, handleChage, handleSubmit, userMessage }) => {
           value={userMessage}
           onChange={handleChage}
           required
+          autoComplete='off'
           InputProps={{
             endAdornment: (
               <InputAdornment

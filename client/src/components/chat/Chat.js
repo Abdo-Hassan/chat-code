@@ -86,8 +86,6 @@ const Chat = ({ location }) => {
     setUserImage(image);
   };
 
-  console.log(userImage);
-
   return (
     <div className='chat-container'>
       <header className='chat-header'>
