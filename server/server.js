@@ -1,7 +1,6 @@
 // import
 const express = require('express');
 const http = require('http');
-const path = require('path');
 const socketio = require('socket.io');
 const formatMessage = require('./utils/messages');
 const {
@@ -55,8 +54,15 @@ io.on('connection', (socket) => {
   });
 
   // user is typing
-  socket.on('typing', (name, room) => {
-    socket.broadcast.to(room).emit('messageTyping', { userTyping: name });
+  // socket.on('typing', (name, room) => {
+  //   socket.broadcast.to(room).emit('messageTyping', { userTyping: name });
+  // });
+
+  // display imgaes
+  socket.on('showImage', (image) => {
+    const user = getCurrentUser(socket.id);
+    io.to(user.room).emit('message', { image });
+    console.log(image);
   });
 
   // Runs when client disconnects

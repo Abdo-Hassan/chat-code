@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
 const UploadImage = ({ getImage }) => {
   const classes = useStyles();
   const [wholeImage, setWholeImage] = useState('');
-  const [downloadedImage, setDownloadedImage] = useState([]);
+  const [downloadedImage, setDownloadedImage] = useState('');
   const [percentage, setPercentage] = useState(0);
   const [loaded, setLoaded] = useState(false);
 

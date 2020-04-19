@@ -31,57 +31,61 @@ const Chat = ({ location }) => {
   const [users, setUsers] = useState([]);
   const [messages, setMessages] = useState([]);
   const [userMessage, setUserMessage] = useState('');
-  const [userImage, setUserImage] = useState([]);
-  const [typing, setTyping] = useState([]);
+  const [userImage, setUserImage] = useState('');
+  // const [typing, setTyping] = useState([]);
 
   let chatMessages = useRef();
 
   useEffect(() => {
-    // !init socket
+    // init socket
     let socket;
     socket = io(ENDPOINT);
     setSocket(socket);
 
-    // !get user name & room from URL
+    // get user name & room from URL
     const { username, room } = queryString.parse(location.search);
     setRoom(room);
     setName(username);
 
-    // !join room
+    // join room
     socket.emit('joinRoom', { username, room });
 
-    // !get all online users
+    // get all online users
     socket.on('roomusers', (users) => {
       setUsers(users.users);
     });
 
-    // !get all messages
+    // get all messages
     socket.on('message', (message) => {
       setMessages((messages) => [...messages, message]);
       chatMessages.current.scrollTop = chatMessages.current.scrollHeight;
+      console.log(message);
     });
 
-    // !user is typing
-    socket.on('messageTyping', (userTypingMessage) => {
-      setTyping((typing) => [...typing, userTypingMessage]);
-    });
-  }, [ENDPOINT, location.search]);
+    // send imgaes to server
+    socket.emit('showImage', userImage);
 
-  // !submit the form
+    // user is typing
+    // socket.on('messageTyping', (userTypingMessage) => {
+    //   setTyping((typing) => [...typing, userTypingMessage]);
+    // });
+  }, [ENDPOINT, location.search, userImage]);
+
+  // submit the form
   const handleSubmit = (e) => {
     e.preventDefault();
     socket.emit('chatMessage', userMessage);
     setUserMessage('');
-    setTyping('');
+    // setTyping('');
   };
 
-  // !handle messages
+  // handle messages
   const handleChage = (e) => {
     setUserMessage(e.target.value);
-    socket.emit('typing', name, room);
+    // socket.emit('typing', name, room);
   };
 
-  // !get user image
+  // get user image
   const getImageFromSend = (image) => {
     setUserImage(image);
   };
@@ -106,7 +110,11 @@ const Chat = ({ location }) => {
           style={{ position: 'relative' }}
         >
           {messages.map((message) => (
-            <Message message={message} name={name} typing={typing} />
+            <Message
+              message={message}
+              name={name}
+              // typing={typing}
+            />
           ))}
         </div>
       </main>
