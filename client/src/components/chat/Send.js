@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
@@ -33,6 +34,7 @@ const Send = ({ getImageFromSend, handleChage, handleSubmit, userMessage }) => {
   const classes = useStyles();
 
   const [image, setImage] = useState([]);
+
   const getImage = (image) => {
     setImage(image);
     getImageFromSend(image);

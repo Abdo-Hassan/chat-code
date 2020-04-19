@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import queryString from 'query-string';
+import ReactHowler from 'react-howler';
+import MessageSound from '../../assets/sounds/message.mp3';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import io from 'socket.io-client';
@@ -26,6 +28,7 @@ const Chat = ({ location }) => {
 
   const ENDPOINT = 'localhost:5000';
   const [socket, setSocket] = useState();
+  const [messageSound, setMessageSound] = useState(false);
   const [room, setRoom] = useState('');
   const [name, setName] = useState('');
   const [users, setUsers] = useState([]);
@@ -58,6 +61,7 @@ const Chat = ({ location }) => {
     // get all messages
     socket.on('message', (message) => {
       setMessages((messages) => [...messages, message]);
+      setMessageSound(true);
       chatMessages.current.scrollTop = chatMessages.current.scrollHeight;
       console.log(message);
     });
@@ -74,6 +78,8 @@ const Chat = ({ location }) => {
   // submit the form
   const handleSubmit = (e) => {
     e.preventDefault();
+    setMessageSound(false);
+
     socket.emit('chatMessage', userMessage);
     setUserMessage('');
     // setTyping('');
@@ -82,6 +88,8 @@ const Chat = ({ location }) => {
   // handle messages
   const handleChage = (e) => {
     setUserMessage(e.target.value);
+    setMessageSound(false);
+
     // socket.emit('typing', name, room);
   };
 
@@ -125,6 +133,7 @@ const Chat = ({ location }) => {
         userMessage={userMessage}
         setUserMessage={setUserMessage}
       />
+      <ReactHowler src={MessageSound} playing={messageSound} />
     </div>
   );
 };
