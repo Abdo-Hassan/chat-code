@@ -11,8 +11,6 @@ const Message = ({
     isSentByCurrentUser = true;
   }
 
-  console.log('image from messages', image);
-
   return (
     <Fragment>
       <div
@@ -39,7 +37,7 @@ const Message = ({
           <span>{ReactEmoji.emojify(text)}</span>
         </p>
       </div>
-      {/*   {image && (
+      {/* {image && (
         <div
           style={{
             marginLeft: isSentByCurrentUser ? '50%' : '0',
@@ -49,7 +47,7 @@ const Message = ({
           <img
             src={image}
             alt='uploded'
-            style={{ width: 200, borderRadius: 10 }}
+            style={{ width: 300, borderRadius: 10 }}
           />
         </div>
       )} */}

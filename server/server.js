@@ -53,17 +53,17 @@ io.on('connection', (socket) => {
     io.to(user.room).emit('message', formatMessage(user.username, message));
   });
 
+  // display imgaes
+  socket.on('showImage', (image) => {
+    const user = getCurrentUser(socket.id);
+    io.to(user.room).emit('uploadedImage', { image });
+    console.log(image);
+  });
+
   // user is typing
   // socket.on('typing', (name, room) => {
   //   socket.broadcast.to(room).emit('messageTyping', { userTyping: name });
   // });
-
-  // display imgaes
-  socket.on('showImage', (image) => {
-    const user = getCurrentUser(socket.id);
-    io.to(user.room).emit('message', { image });
-    console.log(image);
-  });
 
   // Runs when client disconnects
   socket.on('disconnect', () => {

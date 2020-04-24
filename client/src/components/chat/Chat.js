@@ -35,39 +35,39 @@ const Chat = ({ location }) => {
   const [messages, setMessages] = useState([]);
   const [userMessage, setUserMessage] = useState('');
   const [userImage, setUserImage] = useState('');
+  const [uploadedImage, setUploadedImage] = useState('');
   // const [typing, setTyping] = useState([]);
 
   let chatMessages = useRef();
 
   useEffect(() => {
-    // init socket
     let socket;
     socket = io(ENDPOINT);
     setSocket(socket);
 
-    // get user name & room from URL
     const { username, room } = queryString.parse(location.search);
     setRoom(room);
     setName(username);
 
-    // join room
     socket.emit('joinRoom', { username, room });
 
-    // get all online users
     socket.on('roomusers', (users) => {
       setUsers(users.users);
     });
 
-    // get all messages
     socket.on('message', (message) => {
       setMessages((messages) => [...messages, message]);
       setMessageSound(true);
       chatMessages.current.scrollTop = chatMessages.current.scrollHeight;
-      console.log(message);
     });
 
-    // send imgaes to server
-    socket.emit('showImage', userImage);
+    if (userImage) {
+      socket.emit('showImage', userImage);
+    }
+
+    socket.on('uploadedImage', (image) => {
+      console.log('image back from server', image);
+    });
 
     // user is typing
     // socket.on('messageTyping', (userTypingMessage) => {
@@ -75,7 +75,6 @@ const Chat = ({ location }) => {
     // });
   }, [ENDPOINT, location.search, userImage]);
 
-  // submit the form
   const handleSubmit = (e) => {
     e.preventDefault();
     setMessageSound(false);
@@ -85,18 +84,17 @@ const Chat = ({ location }) => {
     // setTyping('');
   };
 
-  // handle messages
   const handleChage = (e) => {
     setUserMessage(e.target.value);
     setMessageSound(false);
-
     // socket.emit('typing', name, room);
   };
 
-  // get user image
   const getImageFromSend = (image) => {
     setUserImage(image);
   };
+
+  console.log('render');
 
   return (
     <div className='chat-container'>

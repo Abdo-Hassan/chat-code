@@ -119,7 +119,7 @@ a {
 .chat-main {
   display: grid;
   grid-template-columns: 1fr 3fr;
-  height: 380px;
+  height: 420px;
 }
 
 .chat-sidebar {

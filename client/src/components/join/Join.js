@@ -114,7 +114,7 @@ const Join = ({ history }) => {
               >
                 <MenuItem value='Javascript'>Javascript</MenuItem>
                 <MenuItem value='Python'>Python</MenuItem>
-                <MenuItem value='React'>C</MenuItem>
+                <MenuItem value='C'>C</MenuItem>
                 <MenuItem value='Java'>Java</MenuItem>
               </Select>
             </FormControl>
