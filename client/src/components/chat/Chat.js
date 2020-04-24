@@ -23,11 +23,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+let socket;
+
 const Chat = ({ location }) => {
   const classes = useStyles();
 
   const ENDPOINT = 'localhost:5000';
-  const [socket, setSocket] = useState();
   const [messageSound, setMessageSound] = useState(false);
   const [room, setRoom] = useState('');
   const [name, setName] = useState('');
@@ -41,9 +42,7 @@ const Chat = ({ location }) => {
   let chatMessages = useRef();
 
   useEffect(() => {
-    let socket;
     socket = io(ENDPOINT);
-    setSocket(socket);
 
     const { username, room } = queryString.parse(location.search);
     setRoom(room);
@@ -58,22 +57,22 @@ const Chat = ({ location }) => {
     socket.on('message', (message) => {
       setMessages((messages) => [...messages, message]);
       setMessageSound(true);
-      chatMessages.current.scrollTop = chatMessages.current.scrollHeight;
-    });
-
-    if (userImage) {
-      socket.emit('showImage', userImage);
-    }
-
-    socket.on('uploadedImage', (image) => {
-      console.log('image back from server', image);
+      // chatMessages.current.scrollTop = chatMessages.current.scrollHeight;
     });
 
     // user is typing
     // socket.on('messageTyping', (userTypingMessage) => {
     //   setTyping((typing) => [...typing, userTypingMessage]);
     // });
-  }, [ENDPOINT, location.search, userImage]);
+  }, [ENDPOINT, location.search]);
+
+  useEffect(() => {
+    socket.emit('showImage', userImage);
+
+    socket.on('uploadedImage', (image) => {
+      console.log('image back from server', image);
+    });
+  }, [userImage]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -93,8 +92,6 @@ const Chat = ({ location }) => {
   const getImageFromSend = (image) => {
     setUserImage(image);
   };
-
-  console.log('render');
 
   return (
     <div className='chat-container'>
