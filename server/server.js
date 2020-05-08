@@ -54,12 +54,9 @@ io.on('connection', (socket) => {
   });
 
   // display imgaes
-  socket.on('showImage', (image, message) => {
+  socket.on('showImage', (image) => {
     const user = getCurrentUser(socket.id);
-    io.to(user.room).emit(
-      'message',
-      formatMessage(user.username, message, image)
-    );
+    io.to(user.room).emit('message', formatMessage(user.username, '', image));
   });
 
   // user is typing

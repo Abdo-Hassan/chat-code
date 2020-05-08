@@ -67,12 +67,8 @@ const Chat = ({ location }) => {
 
   useEffect(() => {
     if (userImage) {
-      socket.emit('showImage', userImage, '');
+      socket.emit('showImage', userImage);
     }
-
-    socket.on('message', (message) => {
-      setMessages([...messages, message]);
-    });
   }, [userImage]);
 
   const handleSubmit = (e) => {

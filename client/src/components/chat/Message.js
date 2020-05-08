@@ -27,7 +27,7 @@ const Message = ({
             color: isSentByCurrentUser ? '#fff' : '#3c4d61',
           }}
         >
-          <span>{username}</span> {''}
+          <span>{isSentByCurrentUser ? 'You' : username}</span> {''}
           <span>{time}</span>
         </p>
         <p
