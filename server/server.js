@@ -2,7 +2,7 @@
 const express = require('express');
 const http = require('http');
 const socketio = require('socket.io');
-const { formatMessage, formatImage } = require('./utils/messages');
+const formatMessage = require('./utils/messages');
 const {
   userJoin,
   getCurrentUser,
@@ -50,7 +50,6 @@ io.on('connection', (socket) => {
   // listen for chatMessage
   socket.on('chatMessage', (message) => {
     const user = getCurrentUser(socket.id);
-    console.log('user from server', user);
     io.to(user.room).emit('message', formatMessage(user.username, message));
   });
 
@@ -58,10 +57,9 @@ io.on('connection', (socket) => {
   socket.on('showImage', (image, message) => {
     const user = getCurrentUser(socket.id);
     io.to(user.room).emit(
-      'uploadedImage',
-      formatImage(user.username, message, image)
+      'message',
+      formatMessage(user.username, message, image)
     );
-    console.log(image);
   });
 
   // user is typing

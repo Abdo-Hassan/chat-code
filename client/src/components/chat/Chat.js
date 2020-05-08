@@ -69,8 +69,9 @@ const Chat = ({ location }) => {
     if (userImage) {
       socket.emit('showImage', userImage, '');
     }
-    socket.on('uploadedImage', (image) => {
-      setMessages([...messages, image]);
+
+    socket.on('message', (message) => {
+      setMessages([...messages, message]);
     });
   }, [userImage]);
 

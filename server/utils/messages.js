@@ -1,20 +1,11 @@
 const moment = require('moment');
 
-function formatMessage(username, text) {
+function formatMessage(username, text, image = '') {
   return {
     username,
     text,
-    time: moment().format('h:mm a'),
-  };
-}
-
-function formatImage(username, text, image) {
-  return {
-    username,
-    text,
-    time: moment().format('h:mm a'),
     image,
+    time: moment().format('h:mm a'),
   };
 }
-
-module.exports = { formatMessage, formatImage };
+module.exports = formatMessage;

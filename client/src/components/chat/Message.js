@@ -11,8 +11,6 @@ const Message = ({
     isSentByCurrentUser = true;
   }
 
-  console.log('image', image);
-
   return (
     <Fragment>
       <div
