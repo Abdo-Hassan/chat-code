@@ -8,4 +8,13 @@ function formatMessage(username, text) {
   };
 }
 
-module.exports = formatMessage;
+function formatImage(username, text, image) {
+  return {
+    username,
+    text,
+    time: moment().format('h:mm a'),
+    image,
+  };
+}
+
+module.exports = { formatMessage, formatImage };

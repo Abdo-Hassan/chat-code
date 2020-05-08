@@ -2,7 +2,7 @@
 const express = require('express');
 const http = require('http');
 const socketio = require('socket.io');
-const formatMessage = require('./utils/messages');
+const { formatMessage, formatImage } = require('./utils/messages');
 const {
   userJoin,
   getCurrentUser,
@@ -55,9 +55,12 @@ io.on('connection', (socket) => {
   });
 
   // display imgaes
-  socket.on('showImage', (image) => {
+  socket.on('showImage', (image, message) => {
     const user = getCurrentUser(socket.id);
-    io.to(user.room).emit('uploadedImage', { image });
+    io.to(user.room).emit(
+      'uploadedImage',
+      formatImage(user.username, message, image)
+    );
     console.log(image);
   });
 

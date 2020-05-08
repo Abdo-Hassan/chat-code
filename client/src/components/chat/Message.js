@@ -11,6 +11,8 @@ const Message = ({
     isSentByCurrentUser = true;
   }
 
+  console.log('image', image);
+
   return (
     <Fragment>
       <div
@@ -36,21 +38,15 @@ const Message = ({
         >
           <span>{ReactEmoji.emojify(text)}</span>
         </p>
-      </div>
-      {/* {image && (
-        <div
-          style={{
-            marginLeft: isSentByCurrentUser ? '50%' : '0',
-          }}
-          key={Math.random() * 10000}
-        >
+        {image && (
           <img
             src={image}
             alt='uploded'
-            style={{ width: 300, borderRadius: 10 }}
+            style={{ width: 350, borderRadius: 10 }}
           />
-        </div>
-      )} */}
+        )}
+      </div>
+
       {/* {typing &&
         typing.map((t) => (
           <p className='typing'> {t.userTyping} is typing....</p>

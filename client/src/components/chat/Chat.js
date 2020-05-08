@@ -36,7 +36,6 @@ const Chat = ({ location }) => {
   const [messages, setMessages] = useState([]);
   const [userMessage, setUserMessage] = useState('');
   const [userImage, setUserImage] = useState('');
-  const [uploadedImage, setUploadedImage] = useState('');
   // const [typing, setTyping] = useState([]);
 
   let chatMessages = useRef();
@@ -57,7 +56,7 @@ const Chat = ({ location }) => {
     socket.on('message', (message) => {
       setMessages((messages) => [...messages, message]);
       setMessageSound(true);
-      // chatMessages.current.scrollTop = chatMessages.current.scrollHeight;
+      chatMessages.current.scrollTop = chatMessages.current.scrollHeight;
     });
 
     // user is typing
@@ -67,10 +66,11 @@ const Chat = ({ location }) => {
   }, [ENDPOINT, location.search]);
 
   useEffect(() => {
-    socket.emit('showImage', userImage);
-
+    if (userImage) {
+      socket.emit('showImage', userImage, '');
+    }
     socket.on('uploadedImage', (image) => {
-      console.log('image back from server', image);
+      setMessages([...messages, image]);
     });
   }, [userImage]);
 
