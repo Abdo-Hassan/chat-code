@@ -56,13 +56,15 @@ io.on('connection', (socket) => {
   // display imgaes
   socket.on('showImage', (image) => {
     const user = getCurrentUser(socket.id);
-    io.to(user.room).emit('message', formatMessage(user.username, '', image));
+    io.to(user.room).emit('message', formatMessage(user.username, null, image));
   });
 
-  // user is typing
-  // socket.on('typing', (name, room) => {
-  //   socket.broadcast.to(room).emit('messageTyping', { userTyping: name });
-  // });
+  socket.on('typing', (typing) => {
+    const user = getCurrentUser(socket.id);
+    socket.broadcast
+      .to(user.room)
+      .emit('message', formatMessage(user.username, null, null, typing));
+  });
 
   // Runs when client disconnects
   socket.on('disconnect', () => {

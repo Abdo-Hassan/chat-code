@@ -36,7 +36,6 @@ const Chat = ({ location }) => {
   const [messages, setMessages] = useState([]);
   const [userMessage, setUserMessage] = useState('');
   const [userImage, setUserImage] = useState('');
-  // const [typing, setTyping] = useState([]);
 
   let chatMessages = useRef();
 
@@ -58,11 +57,6 @@ const Chat = ({ location }) => {
       setMessageSound(true);
       chatMessages.current.scrollTop = chatMessages.current.scrollHeight;
     });
-
-    // user is typing
-    // socket.on('messageTyping', (userTypingMessage) => {
-    //   setTyping((typing) => [...typing, userTypingMessage]);
-    // });
   }, [ENDPOINT, location.search]);
 
   useEffect(() => {
@@ -74,16 +68,17 @@ const Chat = ({ location }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     setMessageSound(false);
-
     socket.emit('chatMessage', userMessage);
     setUserMessage('');
-    // setTyping('');
   };
 
   const handleChage = (e) => {
     setUserMessage(e.target.value);
+    if (userMessage.length === 0) {
+      socket.emit('typing', true);
+      setMessageSound(false);
+    }
     setMessageSound(false);
-    // socket.emit('typing', name, room);
   };
 
   const getImageFromSend = (image) => {
@@ -110,11 +105,7 @@ const Chat = ({ location }) => {
           style={{ position: 'relative' }}
         >
           {messages.map((message) => (
-            <Message
-              message={message}
-              name={name}
-              // typing={typing}
-            />
+            <Message message={message} name={name} />
           ))}
         </div>
       </main>

@@ -194,3 +194,8 @@ a {
   color: #797c80;
   font-size: 15px;
 }
+
+.chat-messages .message .user-image {
+  max-width: 100%;
+  border-radius: 10px;
+}
