@@ -2,7 +2,7 @@
 const express = require('express');
 const http = require('http');
 const socketio = require('socket.io');
-const formatMessage = require('./utils/messages');
+const { clearTyping, formatMessage } = require('./utils/messages');
 const {
   userJoin,
   getCurrentUser,
@@ -27,6 +27,7 @@ const botName = 'ChatCode Bot';
 io.on('connection', (socket) => {
   socket.on('joinRoom', ({ username, room }) => {
     const user = userJoin(socket.id, username, room);
+    socket.emit('socketId', socket.id);
     socket.join(user.room);
 
     // welcome current user
@@ -59,11 +60,20 @@ io.on('connection', (socket) => {
     io.to(user.room).emit('message', formatMessage(user.username, null, image));
   });
 
+  // display user is typing ....
   socket.on('typing', (typing) => {
     const user = getCurrentUser(socket.id);
     socket.broadcast
       .to(user.room)
       .emit('message', formatMessage(user.username, null, null, typing));
+  });
+
+  // clear user is typing ....
+  socket.on('clearTyping', (messages) => {
+    const user = getCurrentUser(socket.id);
+    socket.broadcast
+      .to(user.room)
+      .emit('clearTypingMessage', clearTyping(messages));
   });
 
   // Runs when client disconnects
@@ -73,7 +83,7 @@ io.on('connection', (socket) => {
     if (user) {
       io.to(user.room).emit(
         'message',
-        formatMessage(botName, `${user.username} has left the chat`)
+        formatMessage(botName, `${user.username} has left the chat `)
       );
 
       // send users and room info

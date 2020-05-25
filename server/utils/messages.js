@@ -9,4 +9,12 @@ function formatMessage(username, text = null, image = null, typing = null) {
     time: moment().format('h:mm a'),
   };
 }
-module.exports = formatMessage;
+
+function clearTyping(messages) {
+  messages.filter((message) => {
+    console.log(message);
+    return message;
+  });
+}
+
+module.exports = { clearTyping, formatMessage };

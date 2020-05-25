@@ -27,16 +27,16 @@ let socket;
 
 const Chat = ({ location }) => {
   const classes = useStyles();
-
   const ENDPOINT = 'localhost:5000';
+
   const [messageSound, setMessageSound] = useState(false);
   const [room, setRoom] = useState('');
   const [name, setName] = useState('');
+  const [socketInfo, setSocketInfo] = useState('');
   const [users, setUsers] = useState([]);
   const [messages, setMessages] = useState([]);
   const [userMessage, setUserMessage] = useState('');
   const [userImage, setUserImage] = useState('');
-
   let chatMessages = useRef();
 
   useEffect(() => {
@@ -57,7 +57,19 @@ const Chat = ({ location }) => {
       setMessageSound(true);
       chatMessages.current.scrollTop = chatMessages.current.scrollHeight;
     });
+
+    socket.on('clearTypingMessage', (filtredMessages) => {
+      console.log(filtredMessages);
+      // setMessages([...messages, filtredMessages]);
+    });
   }, [ENDPOINT, location.search]);
+
+  useEffect(() => {
+    setSocketInfo(socket);
+    socket.on('socketId', (socketId) => {
+      console.log('socketId from server', socketId);
+    });
+  }, []);
 
   useEffect(() => {
     if (userImage) {
@@ -65,10 +77,11 @@ const Chat = ({ location }) => {
     }
   }, [userImage]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setMessageSound(false);
-    socket.emit('chatMessage', userMessage);
+    await socket.emit('chatMessage', userMessage);
+    await socket.emit('clearTyping', messages);
     setUserMessage('');
   };
 
@@ -76,7 +89,6 @@ const Chat = ({ location }) => {
     setUserMessage(e.target.value);
     if (userMessage.length === 0) {
       socket.emit('typing', true);
-      setMessageSound(false);
     }
     setMessageSound(false);
   };
@@ -84,6 +96,8 @@ const Chat = ({ location }) => {
   const getImageFromSend = (image) => {
     setUserImage(image);
   };
+
+  console.log('socketId from client', socketInfo.id);
 
   return (
     <div className='chat-container'>

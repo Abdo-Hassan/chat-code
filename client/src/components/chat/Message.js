@@ -2,7 +2,8 @@ import React, { Fragment } from 'react';
 import ReactEmoji from 'react-emoji';
 
 const Message = ({
-  message: { username, text, time, name, image, typing },
+  message: { username, text, time, image, typing },
+  name,
 }) => {
   let isSentByCurrentUser = false;
   if (username === name) {
@@ -39,9 +40,7 @@ const Message = ({
         </div>
       ) : null}
 
-      {!isSentByCurrentUser && typing ? (
-        <p className='typing'> {username} is typing....</p>
-      ) : null}
+      {typing && <p className='typing'> {username} is typing....</p>}
     </Fragment>
   );
 };
