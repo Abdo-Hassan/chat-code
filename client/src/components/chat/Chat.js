@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef } from 'react';
 import queryString from 'query-string';
 import ReactHowler from 'react-howler';
 import MessageSound from '../../assets/sounds/message.mp3';
-import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import io from 'socket.io-client';
 import { Link } from 'react-router-dom';
@@ -11,22 +10,9 @@ import UsersOnline from './UsersOnline';
 import Send from './Send';
 import Message from './Message';
 
-const useStyles = makeStyles((theme) => ({
-  icon: {
-    border: '1px solid #fff',
-    borderRadius: '50%',
-    background: '#fff',
-    color: '#3c4c61',
-    fontSize: 28,
-    position: 'relative',
-    top: 4,
-  },
-}));
-
 let socket;
 
 const Chat = ({ location }) => {
-  const classes = useStyles();
   const ENDPOINT = 'localhost:5000';
 
   const [messageSound, setMessageSound] = useState(false);
@@ -93,9 +79,9 @@ const Chat = ({ location }) => {
 
   const handleChage = (e) => {
     setUserMessage(e.target.value);
-    if (userMessage.length === 0) {
-      socket.emit('typing', true);
-    }
+    // if (userMessage.length === 0) {
+    //   socket.emit('typing', true);
+    // }
     setMessageSound(false);
   };
 
@@ -107,7 +93,7 @@ const Chat = ({ location }) => {
     <div className='chat-container'>
       <header className='chat-header'>
         <h1>
-          <Code className={classes.icon} /> <span>Chat Code</span>
+          <Code className='chat-code-icon' /> <span>Chat Code</span>
         </h1>
         <Link to='/'>
           <Button variant='contained' color='secondary'>

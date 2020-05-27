@@ -52,6 +52,7 @@ const Send = ({ getImageFromSend, handleChage, handleSubmit, userMessage }) => {
           value={userMessage}
           onChange={handleChage}
           required
+          autoFocus
           autoComplete='off'
           InputProps={{
             endAdornment: (

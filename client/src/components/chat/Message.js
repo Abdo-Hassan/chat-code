@@ -16,15 +16,26 @@ const Message = ({
         <div
           className='message'
           style={{
-            backgroundColor: isSentByCurrentUser ? '#0084FF' : '#e7e7e7',
+            backgroundColor:
+              isSentByCurrentUser && !image
+                ? '#0084FF'
+                : image
+                ? 'unset'
+                : '#e7e7e7',
             marginLeft: isSentByCurrentUser ? '50%' : '0',
+            padding: image ? '10px 0' : '10px 13px',
           }}
           key={Math.random() * 10000}
         >
           <p
             className='meta'
             style={{
-              color: isSentByCurrentUser ? '#fff' : '#3c4d61',
+              color:
+                isSentByCurrentUser && !image
+                  ? '#fff'
+                  : image
+                  ? '#3c4d61'
+                  : '#3c4d61',
             }}
           >
             <span>{isSentByCurrentUser ? 'You' : username}</span> {''}
@@ -32,7 +43,7 @@ const Message = ({
           </p>
           <p
             className='text'
-            style={{ color: isSentByCurrentUser ? '#fff' : '#000' }}
+            style={{ color: isSentByCurrentUser ? '#fff' : '#3c4d61' }}
           >
             <span>{ReactEmoji.emojify(text)}</span>
           </p>
@@ -40,7 +51,7 @@ const Message = ({
         </div>
       ) : null}
 
-      {typing && <p className='typing'> {username} is typing....</p>}
+      {/* {typing && <p className='typing'> {username} is typing....</p>} */}
     </Fragment>
   );
 };

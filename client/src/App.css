@@ -89,16 +89,6 @@ a {
   width: 100%;
 }
 
-@media (max-width: 700px) {
-  .chat-main {
-    display: block;
-  }
-
-  .chat-sidebar {
-    display: none;
-  }
-}
-
 /* Chat Page */
 .chat-container {
   max-width: 1100px;
@@ -114,6 +104,16 @@ a {
   display: flex;
   align-items: center;
   justify-content: space-between;
+}
+
+.chat-header .chat-code-icon {
+  border: 1px solid #fff;
+  border-radius: 50%;
+  background: #fff;
+  color: #3c4c61;
+  font-size: 28px;
+  position: relative;
+  top: 4px;
 }
 
 .chat-main {
@@ -136,9 +136,30 @@ a {
   margin-bottom: 20px;
 }
 
-.chat-sidebar h3 {
-  margin-bottom: 15px;
+.chat-sidebar .room-name {
   margin-left: 7px;
+  margin-bottom: 15px;
+}
+.chat-sidebar .users-online {
+  margin-left: 7px;
+  margin-bottom: 15px;
+}
+
+.chat-sidebar .group-icon {
+  border: 1px solid #fff;
+  border-radius: 50%;
+  background: #fff;
+  color: #3c4c61;
+  font-size: 28px;
+  position: relative;
+  top: 4px;
+}
+
+.chat-sidebar .online-icon {
+  position: relative;
+  top: 7px;
+  right: 2px;
+  color: #06f706;
 }
 
 .chat-sidebar ul li {
@@ -198,4 +219,73 @@ a {
 .chat-messages .message .user-image {
   max-width: 100%;
   border-radius: 10px;
+}
+
+@media (max-width: 700px) {
+  .chat-messages {
+    padding: 15px;
+  }
+
+  .chat-messages .message {
+    width: 100%;
+    margin-left: 0 !important;
+  }
+
+  .chat-header h1 {
+    font-size: 20px;
+  }
+
+  .chat-header .chat-code-icon {
+    font-size: 20px;
+    top: 2px;
+  }
+
+  .chat-sidebar .room {
+    font-size: 12px;
+    margin-left: 4px;
+  }
+
+  .chat-sidebar {
+    padding: 20px 5px 0;
+  }
+
+  .chat-sidebar h2 {
+    font-size: 13px;
+    padding: 7px;
+  }
+
+  .chat-messages .message .meta {
+    font-size: 14px;
+  }
+  .chat-messages .message .text {
+    font-size: 13px;
+  }
+
+  .chat-form-container {
+    padding: 17px 10px;
+  }
+
+  .chat-sidebar .group-icon {
+    display: none;
+  }
+
+  .chat-sidebar .online-icon {
+    font-size: 12px;
+    top: 2px;
+  }
+
+  .chat-sidebar .room-name {
+    margin-bottom: 15px;
+    font-size: 12px;
+  }
+
+  .chat-sidebar .users-online {
+    margin-bottom: 7px;
+    font-size: 12px;
+  }
+
+  .chat-sidebar #users .username {
+    font-size: 12px;
+    word-break: break-word;
+  }
 }
