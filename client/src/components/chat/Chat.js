@@ -32,7 +32,8 @@ const Chat = ({ location }) => {
   const [messageSound, setMessageSound] = useState(false);
   const [room, setRoom] = useState('');
   const [name, setName] = useState('');
-  const [socketInfo, setSocketInfo] = useState('');
+  const [socketIdClient, setSocketIdClient] = useState('');
+  // const [onlyUser, setOnlyUser] = useState(false);
   const [users, setUsers] = useState([]);
   const [messages, setMessages] = useState([]);
   const [userMessage, setUserMessage] = useState('');
@@ -58,18 +59,23 @@ const Chat = ({ location }) => {
       chatMessages.current.scrollTop = chatMessages.current.scrollHeight;
     });
 
-    socket.on('clearTypingMessage', (filtredMessages) => {
-      console.log(filtredMessages);
-      // setMessages([...messages, filtredMessages]);
-    });
+    // socket.on('clearTypingMessage', (filtredMessages) => {
+    //   console.log(filtredMessages);
+    //   setMessages([...messages, filtredMessages]);
+    // });
   }, [ENDPOINT, location.search]);
 
   useEffect(() => {
-    setSocketInfo(socket);
-    socket.on('socketId', (socketId) => {
-      console.log('socketId from server', socketId);
-    });
-  }, []);
+    setSocketIdClient(socket);
+    // users.map((user) => {
+    //   if (user.id === socketIdClient.id) {
+    //     setOnlyUser(true);
+    //   } else {
+    //     setOnlyUser(false);
+    //   }
+    //   return user.id;
+    // });
+  }, [users, socketIdClient.id]);
 
   useEffect(() => {
     if (userImage) {
@@ -77,11 +83,11 @@ const Chat = ({ location }) => {
     }
   }, [userImage]);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     setMessageSound(false);
-    await socket.emit('chatMessage', userMessage);
-    await socket.emit('clearTyping', messages);
+    socket.emit('chatMessage', userMessage);
+    // socket.emit('clearTyping', messages);
     setUserMessage('');
   };
 
@@ -96,8 +102,6 @@ const Chat = ({ location }) => {
   const getImageFromSend = (image) => {
     setUserImage(image);
   };
-
-  console.log('socketId from client', socketInfo.id);
 
   return (
     <div className='chat-container'>

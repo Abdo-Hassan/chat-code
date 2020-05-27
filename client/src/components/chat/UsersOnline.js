@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const UsersOnline = ({ users, room }) => {
+const UsersOnline = ({ users, room, onlyUser }) => {
   const classes = useStyles();
 
   return (
@@ -42,10 +42,10 @@ const UsersOnline = ({ users, room }) => {
         Users Online
       </h3>
       <ul id='users'>
-        {users.map((u) => (
-          <li key={u.id}>
+        {users.map((user) => (
+          <li key={user.id}>
             <Online className={classes.online} />
-            <span>{u.username}</span>
+            <span>{user.username}</span>
           </li>
         ))}
       </ul>

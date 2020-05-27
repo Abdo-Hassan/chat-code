@@ -2,7 +2,8 @@
 const express = require('express');
 const http = require('http');
 const socketio = require('socket.io');
-const { clearTyping, formatMessage } = require('./utils/messages');
+// const { clearTyping, formatMessage } = require('./utils/messages');
+const formatMessage = require('./utils/messages');
 const {
   userJoin,
   getCurrentUser,
@@ -27,7 +28,6 @@ const botName = 'ChatCode Bot';
 io.on('connection', (socket) => {
   socket.on('joinRoom', ({ username, room }) => {
     const user = userJoin(socket.id, username, room);
-    socket.emit('socketId', socket.id);
     socket.join(user.room);
 
     // welcome current user
@@ -69,12 +69,12 @@ io.on('connection', (socket) => {
   });
 
   // clear user is typing ....
-  socket.on('clearTyping', (messages) => {
-    const user = getCurrentUser(socket.id);
-    socket.broadcast
-      .to(user.room)
-      .emit('clearTypingMessage', clearTyping(messages));
-  });
+  // socket.on('clearTyping', (messages) => {
+  //   const user = getCurrentUser(socket.id);
+  //   socket.broadcast
+  //     .to(user.room)
+  //     .emit('clearTypingMessage', clearTyping(messages));
+  // });
 
   // Runs when client disconnects
   socket.on('disconnect', () => {

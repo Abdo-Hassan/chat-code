@@ -10,11 +10,12 @@ function formatMessage(username, text = null, image = null, typing = null) {
   };
 }
 
-function clearTyping(messages) {
-  messages.filter((message) => {
-    console.log(message);
-    return message;
-  });
-}
+// function clearTyping(messages) {
+//   messages.filter((message) => {
+//     console.log(message);
+//     return message;
+//   });
+// }
 
-module.exports = { clearTyping, formatMessage };
+// module.exports = { clearTyping, formatMessage };
+module.exports = formatMessage;

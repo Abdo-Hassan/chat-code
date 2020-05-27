@@ -62,6 +62,7 @@ const Send = ({ getImageFromSend, handleChage, handleSubmit, userMessage }) => {
                 <UploadImage image={image} getImage={getImage} />
               </InputAdornment>
             ),
+            disableUnderline: true,
           }}
         />
         <Button variant='contained' type='submit' className={classes.send}>
