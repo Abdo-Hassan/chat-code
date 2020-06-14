@@ -61,6 +61,7 @@ const UploadImage = ({ getImage }) => {
           style={{
             color: '#3c4c61',
             cursor: 'pointer',
+            marginRight: 4,
           }}
         />
       </label>

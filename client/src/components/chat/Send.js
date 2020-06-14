@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
-
+import Picker from 'emoji-picker-react';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
+import Menu from '@material-ui/core/Menu';
 import TextField from '@material-ui/core/TextField';
 import InputAdornment from '@material-ui/core/InputAdornment';
+import Emoji from '@material-ui/icons/TagFaces';
 import UploadImage from './UploadImage';
 
 const useStyles = makeStyles((theme) => ({
@@ -30,15 +32,37 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Send = ({ getImageFromSend, handleChage, handleSubmit, userMessage }) => {
+const Send = ({
+  getImageFromSend,
+  handleChage,
+  handleSubmit,
+  userMessage,
+  getEmoji,
+}) => {
   const classes = useStyles();
 
   const [image, setImage] = useState([]);
+  const [chosenEmoji, setChosenEmoji] = useState(null);
+  const [anchorEl, setAnchorEl] = useState(null);
 
   const getImage = (image) => {
     setImage(image);
     getImageFromSend(image);
   };
+
+  const onEmojiClick = (event, emojiObject) => {
+    setChosenEmoji(emojiObject);
+  };
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  getEmoji(chosenEmoji);
 
   return (
     <div className='chat-form-container'>
@@ -61,6 +85,14 @@ const Send = ({ getImageFromSend, handleChage, handleSubmit, userMessage }) => {
                 style={{ display: 'flex', marginRight: 7 }}
               >
                 <UploadImage image={image} getImage={getImage} />
+                <Button
+                  aria-controls='simple-menu'
+                  aria-haspopup='true'
+                  onClick={handleClick}
+                  style={{ minWidth: 40 }}
+                >
+                  <Emoji />
+                </Button>
               </InputAdornment>
             ),
             disableUnderline: true,
@@ -69,6 +101,15 @@ const Send = ({ getImageFromSend, handleChage, handleSubmit, userMessage }) => {
         <Button variant='contained' type='submit' className={classes.send}>
           Send
         </Button>
+        <Menu
+          id='simple-menu'
+          anchorEl={anchorEl}
+          keepMounted
+          open={Boolean(anchorEl)}
+          onClose={handleClose}
+        >
+          <Picker onEmojiClick={onEmojiClick} />
+        </Menu>
       </form>
     </div>
   );

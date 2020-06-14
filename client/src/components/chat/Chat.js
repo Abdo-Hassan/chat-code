@@ -89,6 +89,10 @@ const Chat = ({ location }) => {
     setUserImage(image);
   };
 
+  const getEmoji = (emoji) => {
+    console.log('chosenEmoji from send', emoji);
+  };
+
   return (
     <div className='chat-container'>
       <header className='chat-header'>
@@ -119,6 +123,7 @@ const Chat = ({ location }) => {
         handleChage={handleChage}
         userMessage={userMessage}
         setUserMessage={setUserMessage}
+        getEmoji={getEmoji}
       />
       <ReactHowler src={MessageSound} playing={messageSound} />
     </div>
