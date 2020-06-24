@@ -1,4 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { makeStyles } from '@material-ui/core/styles';
+import BG from '../../assets/bg.png';
 import queryString from 'query-string';
 import ReactHowler from 'react-howler';
 import MessageSound from '../../assets/sounds/message.mp3';
@@ -10,10 +12,20 @@ import Send from './Send';
 import Message from './Message';
 import auth from '../../auth/auth';
 
+const useStyles = makeStyles(() => ({
+  bg: {
+    backgroundImage: `url(${BG})`,
+    backgroundRepeat: 'no-repeat',
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+  },
+}));
+
 let socket;
 
 const Chat = ({ location, history }) => {
   const ENDPOINT = 'localhost:5000';
+  const classes = useStyles();
 
   const [messageSound, setMessageSound] = useState(false);
   const [room, setRoom] = useState('');
@@ -105,41 +117,43 @@ const Chat = ({ location, history }) => {
   };
 
   return (
-    <div className='chat-container'>
-      <header className='chat-header'>
-        <h1>
-          <Code className='chat-code-icon' /> <span>Chat Code</span>
-        </h1>
-        <Button
-          className='leave-room'
-          variant='contained'
-          color='secondary'
-          onClick={leaveRoom}
-        >
-          Leave Room
-        </Button>
-      </header>
-      <main className='chat-main'>
-        <UsersOnline users={users} room={room} name={name} />
-        <div
-          className='chat-messages'
-          ref={chatMessages}
-          style={{ position: 'relative' }}
-        >
-          {messages.map((message) => (
-            <Message message={message} name={name} />
-          ))}
-        </div>
-      </main>
-      <Send
-        getImageFromSend={getImageFromSend}
-        handleSubmit={handleSubmit}
-        handleChage={handleChage}
-        userMessage={userMessage}
-        setUserMessage={setUserMessage}
-        // getEmoji={getEmoji}
-      />
-      <ReactHowler src={MessageSound} playing={messageSound} />
+    <div className={classes.bg}>
+      <div className='chat-container'>
+        <header className='chat-header'>
+          <h1>
+            <Code className='chat-code-icon' /> <span>Chat Code</span>
+          </h1>
+          <Button
+            className='leave-room'
+            variant='contained'
+            color='secondary'
+            onClick={leaveRoom}
+          >
+            Leave Room
+          </Button>
+        </header>
+        <main className='chat-main'>
+          <UsersOnline users={users} room={room} name={name} />
+          <div
+            className='chat-messages'
+            ref={chatMessages}
+            style={{ position: 'relative' }}
+          >
+            {messages.map((message) => (
+              <Message message={message} name={name} />
+            ))}
+          </div>
+        </main>
+        <Send
+          getImageFromSend={getImageFromSend}
+          handleSubmit={handleSubmit}
+          handleChage={handleChage}
+          userMessage={userMessage}
+          setUserMessage={setUserMessage}
+          // getEmoji={getEmoji}
+        />
+        <ReactHowler src={MessageSound} playing={messageSound} />
+      </div>
     </div>
   );
 };

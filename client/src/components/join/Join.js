@@ -22,10 +22,6 @@ const useStyles = makeStyles((theme) => ({
   image: {
     backgroundImage: `url(${BG})`,
     backgroundRepeat: 'no-repeat',
-    backgroundColor:
-      theme.palette.type === 'light'
-        ? theme.palette.grey[50]
-        : theme.palette.grey[900],
     backgroundSize: 'cover',
     backgroundPosition: 'center',
   },
@@ -72,6 +68,11 @@ const Join = ({ history }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (username && room) {
+      auth.login(() => {
+        history.push(`/chat?username=${username}&room=${room}`);
+      });
+    }
   };
 
   return (
@@ -121,11 +122,6 @@ const Join = ({ history }) => {
               fullWidth
               variant='contained'
               className={classes.submit}
-              onClick={() =>
-                auth.login(() => {
-                  history.push(`/chat?username=${username}&room=${room}`);
-                })
-              }
             >
               Join
             </Button>
