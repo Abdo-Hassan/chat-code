@@ -4,15 +4,15 @@ import ReactHowler from 'react-howler';
 import MessageSound from '../../assets/sounds/message.mp3';
 import Button from '@material-ui/core/Button';
 import io from 'socket.io-client';
-import { Link } from 'react-router-dom';
 import Code from '@material-ui/icons/Code';
 import UsersOnline from './UsersOnline';
 import Send from './Send';
 import Message from './Message';
+import auth from '../../auth/auth';
 
 let socket;
 
-const Chat = ({ location }) => {
+const Chat = ({ location, history }) => {
   const ENDPOINT = 'localhost:5000';
 
   const [messageSound, setMessageSound] = useState(false);
@@ -94,17 +94,30 @@ const Chat = ({ location }) => {
   //   setEmoji(emoji);
   // };
 
+  const leaveRoom = () => {
+    let leave = window.confirm('Are you sure you want to leave ?');
+    if (leave) {
+      auth.logout(() => {
+        socket.disconnect();
+        history.push('/');
+      });
+    }
+  };
+
   return (
     <div className='chat-container'>
       <header className='chat-header'>
         <h1>
           <Code className='chat-code-icon' /> <span>Chat Code</span>
         </h1>
-        <Link to='/'>
-          <Button variant='contained' color='secondary'>
-            Leave Room
-          </Button>
-        </Link>
+        <Button
+          className='leave-room'
+          variant='contained'
+          color='secondary'
+          onClick={leaveRoom}
+        >
+          Leave Room
+        </Button>
       </header>
       <main className='chat-main'>
         <UsersOnline users={users} room={room} name={name} />

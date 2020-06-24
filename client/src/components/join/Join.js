@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
+import { makeStyles } from '@material-ui/core/styles';
 import BG from '../../assets/bg.png';
+import auth from '../../auth/auth';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -12,7 +14,6 @@ import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
-import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -71,9 +72,6 @@ const Join = ({ history }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (username && room) {
-      history.push(`/chat?username=${username}&room=${room}`);
-    }
   };
 
   return (
@@ -123,6 +121,11 @@ const Join = ({ history }) => {
               fullWidth
               variant='contained'
               className={classes.submit}
+              onClick={() =>
+                auth.login(() => {
+                  history.push(`/chat?username=${username}&room=${room}`);
+                })
+              }
             >
               Join
             </Button>

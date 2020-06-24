@@ -235,6 +235,11 @@ a {
     font-size: 20px;
   }
 
+  .chat-header .leave-room {
+    padding: 8px 10px;
+    font-size: 12px;
+  }
+
   .chat-header .chat-code-icon {
     font-size: 20px;
     top: 2px;

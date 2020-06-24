@@ -4,6 +4,7 @@ import './App.css';
 import Chat from './components/chat/Chat';
 import Join from './components/join/Join';
 import NotFound from './components/NotFound';
+import ProtectedRoute from './auth/ProtectedRoute';
 
 function App() {
   return (
@@ -11,7 +12,7 @@ function App() {
       <div className='App'>
         <Switch>
           <Route exact path='/' component={Join} />
-          <Route exact path='/chat' component={Chat} />
+          <ProtectedRoute exact path='/chat' component={Chat} />
           <Route component={NotFound} />
         </Switch>
       </div>
