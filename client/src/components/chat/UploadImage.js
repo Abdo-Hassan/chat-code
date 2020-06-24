@@ -9,6 +9,13 @@ const useStyles = makeStyles((theme) => ({
     order: -1,
     width: '22px !important',
   },
+  photoIcon: {
+    position: 'relative',
+    top: 2,
+    color: '#3c4c61',
+    cursor: 'pointer',
+    marginRight: 4,
+  },
 }));
 
 const UploadImage = ({ getImage }) => {
@@ -57,13 +64,7 @@ const UploadImage = ({ getImage }) => {
   return (
     <Fragment>
       <label htmlFor='image'>
-        <Photo
-          style={{
-            color: '#3c4c61',
-            cursor: 'pointer',
-            marginRight: 4,
-          }}
-        />
+        <Photo className={classes.photoIcon} />
       </label>
       <input
         type='file'

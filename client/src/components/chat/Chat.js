@@ -24,6 +24,7 @@ const Chat = ({ location }) => {
   const [messages, setMessages] = useState([]);
   const [userMessage, setUserMessage] = useState('');
   const [userImage, setUserImage] = useState('');
+  // const [emoji, setEmoji] = useState('');
   let chatMessages = useRef();
 
   useEffect(() => {
@@ -89,9 +90,9 @@ const Chat = ({ location }) => {
     setUserImage(image);
   };
 
-  const getEmoji = (emoji) => {
-    console.log('chosenEmoji from send', emoji);
-  };
+  // const getEmoji = (emoji) => {
+  //   setEmoji(emoji);
+  // };
 
   return (
     <div className='chat-container'>
@@ -123,7 +124,7 @@ const Chat = ({ location }) => {
         handleChage={handleChage}
         userMessage={userMessage}
         setUserMessage={setUserMessage}
-        getEmoji={getEmoji}
+        // getEmoji={getEmoji}
       />
       <ReactHowler src={MessageSound} playing={messageSound} />
     </div>
