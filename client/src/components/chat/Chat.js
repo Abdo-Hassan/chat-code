@@ -19,6 +19,7 @@ const useStyles = makeStyles(() => ({
     backgroundSize: 'cover',
     backgroundPosition: 'center',
     minHeight: '100vh',
+    padding: '1px 0',
   },
 }));
 
@@ -32,7 +33,6 @@ const Chat = ({ location, history }) => {
   const [room, setRoom] = useState('');
   const [name, setName] = useState('');
   const [socketIdClient, setSocketIdClient] = useState('');
-  // const [onlyUser, setOnlyUser] = useState(false);
   const [users, setUsers] = useState([]);
   const [messages, setMessages] = useState([]);
   const [userMessage, setUserMessage] = useState('');
@@ -67,14 +67,6 @@ const Chat = ({ location, history }) => {
 
   useEffect(() => {
     setSocketIdClient(socket);
-    // users.map((user) => {
-    //   if (user.id === socketIdClient.id) {
-    //     setOnlyUser(true);
-    //   } else {
-    //     setOnlyUser(false);
-    //   }
-    //   return user.id;
-    // });
   }, [users, socketIdClient.id]);
 
   useEffect(() => {
@@ -134,7 +126,7 @@ const Chat = ({ location, history }) => {
           </Button>
         </header>
         <main className='chat-main'>
-          <UsersOnline users={users} room={room} name={name} />
+          <UsersOnline users={users} room={room} id={socketIdClient} />
           <div
             className='chat-messages'
             ref={chatMessages}

@@ -2,7 +2,7 @@ import React from 'react';
 import Group from '@material-ui/icons/Group';
 import Online from '@material-ui/icons/FiberManualRecord';
 
-const UsersOnline = ({ users, room }) => {
+const UsersOnline = ({ users, room, id }) => {
   return (
     <div className='chat-sidebar'>
       <h3 className='room-name'>
@@ -21,7 +21,9 @@ const UsersOnline = ({ users, room }) => {
         {users.map((user) => (
           <li key={user.id}>
             <Online className='online-icon' />
-            <span className='username'>{user.username}</span>
+            <span className='username'>
+              {user.username} {user.id === id.id && <span>( You )</span>}
+            </span>
           </li>
         ))}
       </ul>
