@@ -18,6 +18,7 @@ const useStyles = makeStyles(() => ({
     backgroundRepeat: 'no-repeat',
     backgroundSize: 'cover',
     backgroundPosition: 'center',
+    minHeight: '100vh',
   },
 }));
 

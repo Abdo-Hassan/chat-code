@@ -61,8 +61,16 @@ const Join = ({ history }) => {
   const classes = useStyles();
   const [username, setUsername] = useState('');
   const [room, setRoom] = useState('');
+  const [errorUsername, setErrorUsername] = useState(false);
+  const [errorRoom, setErrorRoom] = useState(false);
 
-  const handleChange = (e) => {
+  const handleChangeName = (e) => {
+    setErrorUsername(false);
+    setUsername(e.target.value);
+  };
+
+  const handleChangeRoom = (e) => {
+    setErrorRoom(false);
     setRoom(e.target.value);
   };
 
@@ -72,6 +80,12 @@ const Join = ({ history }) => {
       auth.login(() => {
         history.push(`/chat?username=${username}&room=${room}`);
       });
+    }
+    if (!username) {
+      setErrorUsername(true);
+    }
+    if (!room) {
+      setErrorRoom(true);
     }
   };
 
@@ -90,14 +104,14 @@ const Join = ({ history }) => {
             <TextField
               variant='outlined'
               margin='normal'
-              required
               fullWidth
               id='username'
               label='Enter your name'
               name='username'
               autoComplete='username'
               autoFocus
-              onChange={(e) => setUsername(e.target.value)}
+              error={errorUsername}
+              onChange={handleChangeName}
             />
             <FormControl variant='filled' className={classes.formControl}>
               <InputLabel id='demo-simple-select-label'>
@@ -108,8 +122,9 @@ const Join = ({ history }) => {
                 id='demo-simple-select-filled'
                 value={room}
                 name='room'
-                onChange={handleChange}
+                onChange={handleChangeRoom}
                 required
+                error={errorRoom}
               >
                 <MenuItem value='Javascript'>Javascript</MenuItem>
                 <MenuItem value='Python'>Python</MenuItem>

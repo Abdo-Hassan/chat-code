@@ -1,6 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import NotFoundBG from '../assets/404.jpg';
+import NotFoundBG from '../assets/404.jpeg';
 const useStyles = makeStyles(() => ({
   bg: {
     backgroundImage: `url(${NotFoundBG})`,
