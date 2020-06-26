@@ -26,7 +26,7 @@ const useStyles = makeStyles(() => ({
 let socket;
 
 const Chat = ({ location, history }) => {
-  const ENDPOINT = 'localhost:5000';
+  const ENDPOINT = process.env.PORT || 'localhost:5000';
   const classes = useStyles();
 
   const [messageSound, setMessageSound] = useState(false);
