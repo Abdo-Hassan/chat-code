@@ -19,9 +19,9 @@ const server = http.createServer(app);
 const io = socketio(server);
 // init
 
-app.get('/', (req, res) => {
-  res.send('Server is up and running');
-});
+// app.get('/', (req, res) => {
+//   res.send('Server is up and running');
+// });
 
 // production
 if (process.env.NODE_ENV === 'production') {
