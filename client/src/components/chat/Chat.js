@@ -26,7 +26,7 @@ const useStyles = makeStyles(() => ({
 let socket;
 
 const Chat = ({ location, history }) => {
-  const ENDPOINT = 'localhost:5000';
+  // const ENDPOINT = 'localhost:5000';
   const classes = useStyles();
 
   const [messageSound, setMessageSound] = useState(false);
@@ -41,7 +41,8 @@ const Chat = ({ location, history }) => {
   let chatMessages = useRef();
 
   useEffect(() => {
-    socket = io(ENDPOINT);
+    // socket = io(ENDPOINT); for local
+    socket = io('https://chat-code0.herokuapp.com/'); // for heroku
 
     const { username, room } = queryString.parse(location.search);
     setRoom(room);
@@ -63,7 +64,7 @@ const Chat = ({ location, history }) => {
     //   console.log(filtredMessages);
     //   setMessages([...messages, filtredMessages]);
     // });
-  }, [ENDPOINT, location.search]);
+  }, [location.search]);
 
   useEffect(() => {
     setSocketIdClient(socket);
