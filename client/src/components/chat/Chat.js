@@ -60,6 +60,11 @@ const Chat = ({ location, history }) => {
       chatMessages.current.scrollTop = chatMessages.current.scrollHeight;
     });
 
+    return () => {
+      socket.emit('disconnect');
+      socket.close();
+    };
+
     // socket.on('clearTypingMessage', (filtredMessages) => {
     //   console.log(filtredMessages);
     //   setMessages([...messages, filtredMessages]);
