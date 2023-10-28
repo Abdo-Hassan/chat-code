@@ -42,7 +42,7 @@ const Chat = ({ location, history }) => {
 
   useEffect(() => {
     // socket = io(ENDPOINT); for local
-    socket = io('https://chat-code0.herokuapp.com/'); // for heroku
+    socket = io('https://chatcode0.vercel.app/'); // for heroku
 
     const { username, room } = queryString.parse(location.search);
     setRoom(room);
@@ -126,8 +126,7 @@ const Chat = ({ location, history }) => {
             className='leave-room'
             variant='contained'
             color='secondary'
-            onClick={leaveRoom}
-          >
+            onClick={leaveRoom}>
             Leave Room
           </Button>
         </header>
@@ -136,8 +135,7 @@ const Chat = ({ location, history }) => {
           <div
             className='chat-messages'
             ref={chatMessages}
-            style={{ position: 'relative' }}
-          >
+            style={{ position: 'relative' }}>
             {messages.map((message) => (
               <Message message={message} name={name} />
             ))}
